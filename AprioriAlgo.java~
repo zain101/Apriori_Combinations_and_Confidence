@@ -251,7 +251,7 @@ public class AprioriAlgo
         System.out.print("\nEnter Transaction Database File Name (Data in Binary form) : ");
         fileToParse="dataset.csv";
         AprioriAlgo ap=new AprioriAlgo();
-        ap.minSup=0.8;
+        ap.minSup=0.9;
         ap.AprioriAlgoProcess(fileToParse);
         
      }

@@ -1,8 +1,6 @@
 
 Enter Transaction Database File Name (Data in Binary form) : Frequent 1-itemsets
-[C13, C14, C16, C21, C22, C25]
+[C13, C22, C25]
 Frequent 2-itemsets
-[C13 C14, C13 C16, C13 C21, C13 C22, C13 C25, C22 C25]
-Frequent 3-itemsets
-[C13 C22 C25]
+[C13 C22, C13 C25]
 10	6	3	9	18	15	7	19	1	2	2	18	36	27	14	28	10	14	2	6	27	31	15	22	33	12	13	

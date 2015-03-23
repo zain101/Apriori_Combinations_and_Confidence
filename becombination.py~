@@ -13,8 +13,8 @@ map= []
 tmp = []
 combi= []
 pieCombi=[]
-ranks= range(0, 500)
-for i in range(0, 500):
+ranks= range(0, 200)
+for i in range(0, 200):
 	ranks[i]= 0.0
 
 def init():
