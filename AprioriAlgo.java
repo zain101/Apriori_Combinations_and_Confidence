@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.*;
-import java.util.*; 
+import java.util.*;
 public class AprioriAlgo
 {
 	int [][]dset;
@@ -24,11 +24,11 @@ public class AprioriAlgo
         {
         	fileReader = new BufferedReader(new FileReader(fn));
         	int rec=0;
-        	attribs=(fileReader.readLine()).split(" ");           
+        	attribs=(fileReader.readLine()).split(" ");
 	        while ((line = fileReader.readLine()) != null)
 	        {
 	      		rec++;
-	        }		
+	        }
 	        this.AprioriAlgo(rec);
 	        fileReader.close();
 	        fileReader = new BufferedReader(new FileReader(fn));
@@ -64,7 +64,7 @@ public class AprioriAlgo
         	System.out.println();
         }
 	}
-	
+
 	public void AprioriAlgoProcess(String fp)
     {
         Date d; //date object for timing purposes
@@ -204,7 +204,7 @@ public class AprioriAlgo
                     }
 
                 }
-                
+
                 numTransactions=dset.length;
                 for(int i=0; i<candidates.size(); i++)
                 {
@@ -228,32 +228,31 @@ public class AprioriAlgo
         	for(j=0;j<27;j++){
         		if(dset[i][j] == 1){
         			arr[j]= arr[j]+1;
-        			///System.out.println(dset[i][j]); 
-        			
+        			///System.out.println(dset[i][j]);
+
         		}
         		//System.out.print(dset[i][j]+"\t");
               	}
               		//System.out.print("\n");
         }
-        
+
         for(i=0;i<27;i++){
-        
+
         	System.out.print(arr[i]+"\t");
         }
 
-    
+
     }
 	public static void main(String[] args) throws IOException
     {
         //Input file which needs to be parsed
         String fileToParse;//="aprtest";//"datasetbin";
-        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));            
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         System.out.print("\nEnter Transaction Database File Name (Data in Binary form) : ");
         fileToParse="dataset.csv";
         AprioriAlgo ap=new AprioriAlgo();
-        ap.minSup=0.8;
+        ap.minSup=0.4;
         ap.AprioriAlgoProcess(fileToParse);
-        
+
      }
 }
- 

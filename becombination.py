@@ -2,6 +2,7 @@
 import copy
 from pycsv import *
 import os
+import itertools
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
@@ -35,7 +36,7 @@ def init():
 	for i in l:
 		if ',' in i:
 			l[j] = i.strip(',')
-		j = j + 1 	
+		j = j + 1
 	l = list(set(l))
 	print "Frame-set ==>", l
 	print "Summation of columns ==>", y
@@ -55,7 +56,7 @@ def genVal(m):
         z+= [{i: n}]
     return z
 
-
+'''
 def genrateCombinations():
 	print "\nGenrating the Combinations......................."
 	global combi, cpy_combi
@@ -74,6 +75,37 @@ def genrateCombinations():
 	print "\nCombinations genrated are ::"
 	for i in combi:
 		print i
+'''
+
+def rest(a, b):
+    #print a, b
+    for i in a:
+        #print i
+        try:
+            b.remove(i)
+        except:
+            "not in list..."
+    #print b , type(b)
+    return b
+
+def genrateCombinations():
+    global l, combi
+    j=0
+    for i in range(2, len(l)):
+        for x in itertools.combinations(l,i):
+            #print x
+            j = j+1
+            combi.append(list(x))
+    genXY()
+
+
+def genXY():
+    global l, combi
+    j=0
+    for i in combi:
+        i.sort()
+    for i in range(0,len(combi)):
+        combi[i] = [combi[i]] + [rest(combi[i], copy.copy(l))]
 
 def mapping(a):
     for i in map:
@@ -144,7 +176,7 @@ def plot_confidence():
 	plt.show()
 
 def pieChart():
-	global ranks, combi	
+	global ranks, combi
 	tmp= []
 	for i in combi:
 		tmp+= i[0:2]
@@ -156,11 +188,11 @@ def pieChart():
 	for i in range(0, len(ranks)):
 		colors[i] = colors_list[j]
 		j = i%len(colors_list)
-		
+
 	explode_list= range(0, len(ranks))
 	for i in range(0, len(ranks)):
 		explode_list[i] = 0.1
-	explode = tuple(explode_list) 
+	explode = tuple(explode_list)
 	#cs=cm.Set1(np.arange(9)/9.)
 	fracs= ranks[0:len(combi)]
 	py.pie(fracs, labels=labels, colors= colors, explode= explode, autopct='%1.1f%%', shadow=True, startangle=90)
@@ -177,11 +209,11 @@ def moreThan90():
 		if i > 0.89:
 			r += [i]
 			pieCombi += [combi[j]]
-		j=j+1	
+		j=j+1
 	ranks = r
 	print len(ranks), len(pieCombi)
-			
-			
+
+
 if __name__ == "__main__":
 	os.system("javac AprioriAlgo.java")
 	os.system("java AprioriAlgo > out.txt")
@@ -189,8 +221,12 @@ if __name__ == "__main__":
 	os.system("cat out.txt | tail -2 > b.txt")
 	init()
 	map= genVal(l)
-	#print map		
+	#print map
 	genrateCombinations()
+	print len(combi)
+	for i in combi:
+		print i
+	xx = raw_input()
 	readCSV()
 	calRank()
 	#print len(l_csv)
