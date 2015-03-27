@@ -8,12 +8,13 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 
 import pylab as py
-l= []
-y= []
-map= []
+l = []
+y = []
+map = []
 tmp = []
-combi= []
-pieCombi=[]
+combi = []
+pieCombi = []
+globalRank = 0.0
 ranks= range(0, 500)
 for i in range(0, 500):
 	ranks[i]= 0.0
@@ -65,7 +66,7 @@ def genrateCombinations():
 	   combi+= [l[i:i+1] + l[i+1:]+l[0:i]]
 
 	for i in range(0,len(l)):
-		for j in range(i+1,len(l)):
+		for j in range(i+1,len(l)):              # This guy works for limited number of combinations, so don't use, kept for memories.
 		    tmp = [l[i]]+[l[j]]
 		    tmp1 = copy.copy(tmp)
 		    combi += [tmp]
@@ -91,7 +92,7 @@ def rest(a, b):
 def genrateCombinations():
     global l, combi
     j=0
-    for i in range(2, len(l)):
+    for i in range(1, len(l)):
         for x in itertools.combinations(l,i):
             #print x
             j = j+1
@@ -111,12 +112,57 @@ def mapping(a):
     for i in map:
         if a in i:
             return i.values()
+'''
+def calRank():
+	print "\nPress enter to start calculating the Confidence..............."
+	xx= raw_input()
+	j=0
+	global ranks, combi, globalRank
+	for a in combi:
+		tmp= copy.copy(a)
+		if(len(tmp) > 2):
+			for i in range(0,len(a)):
+				if (i == 0):
+					tmp[i]= mapping(tmp[i])[0]
+				else:
+					tmp[i]= giveNum(tmp[i])
+		else:
+			for i in range(0, len(a)):
+				tmp[i] = mapping(tmp[i])[0]
+			#print tmp, len(tmp)
+		if(len(tmp) > 2):
+				ranks[j]= float(workForUnion(tmp[1:]))/float(tmp[0])
+				j= j+1
+		else:
+			if((sum(tmp[1:])/tmp[0]) > -1):
+				ranks[j]= float(sum(tmp[1:]))/float(tmp[0])
+				j= j+1
+'''
+def stripping():
+	global combi
+	ii, jj, kk = 0, 0, 0
+	for i in combi:
+	    jj=0
+	    for j in i:
+	        kk=0
+	        for k in j:
+	            combi[ii][jj][kk] = giveNum(combi[ii][jj][kk])-1
+	            kk = kk+1
+	        jj = jj+1
+	    ii=ii+1
+
+def calGlobalUnion():
+	global combi, globalRank
+	print combi[0][0]+combi[0][1]
+	globalRank = workForUnion(combi[0][0]+combi[0][1])
+	print  workForUnion(combi[0][0]+combi[0][1])
+	return globalRank
 
 def calRank():
 	print "\nPress enter to start calculating the Confidence..............."
 	xx= raw_input()
 	j=0
-	global ranks, combi
+	global ranks, combi, globalRank
 	for a in combi:
 		tmp= copy.copy(a)
 		if(len(tmp) > 2):
@@ -223,11 +269,14 @@ if __name__ == "__main__":
 	map= genVal(l)
 	#print map
 	genrateCombinations()
+	stripping()
 	print len(combi)
 	for i in combi:
 		print i
+	print globalRank
 	xx = raw_input()
 	readCSV()
+	print calGlobalUnion()
 	calRank()
 	#print len(l_csv)
 	display()

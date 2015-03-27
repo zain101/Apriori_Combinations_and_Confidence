@@ -1,15 +1,17 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.*;
-import java.util.*;
+import java.util.*; 
 public class AprioriAlgo
 {
 	int [][]dset;
 	int[] arr= new int[30];
 	Vector<String> candidates=new Vector<String>(); //the current candidates
+	static Vector<String> candidatesCopy = new Vector<String>(); //the copy of
+	String temp;
     int numItems; //number of items per transaction
     int numTransactions; //number of transactions
-    double minSup; //minimum support for a frequent itemset
+    float minSup; //minimum support for a frequent itemset
     String []attribs;
 	public void AprioriAlgo(int n)
 	{
@@ -24,11 +26,11 @@ public class AprioriAlgo
         {
         	fileReader = new BufferedReader(new FileReader(fn));
         	int rec=0;
-        	attribs=(fileReader.readLine()).split(" ");
+        	attribs=(fileReader.readLine()).split(" ");           
 	        while ((line = fileReader.readLine()) != null)
 	        {
 	      		rec++;
-	        }
+	        }		
 	        this.AprioriAlgo(rec);
 	        fileReader.close();
 	        fileReader = new BufferedReader(new FileReader(fn));
@@ -64,7 +66,7 @@ public class AprioriAlgo
         	System.out.println();
         }
 	}
-
+	
 	public void AprioriAlgoProcess(String fp)
     {
         Date d; //date object for timing purposes
@@ -90,21 +92,40 @@ public class AprioriAlgo
             calculateFrequentItemsets(itemsetNumber);
             if(candidates.size()!=0)
             {
-                System.out.println("Frequent " + itemsetNumber + "-itemsets");
-                System.out.println(candidates);
+                //System.out.println("Frequent " + itemsetNumber + "-itemsets");
+                //System.out.println(candidates);
+            	temp = candidates.toString();
+            	temp = temp.replace(",","");
+            	//temp = removeDuplicates(temp);
+            	//System.out.println(temp);
             }
+
+            
         //if there are <=1 frequent items, then its the end. This prevents reading through the database again. When there is only one frequent itemset.
         }while(candidates.size()>1);
-
+		candidatesCopy.add(temp);
         //end timer
         d = new Date();
         end = d.getTime();
 
         //display the execution time
-        //System.out.println("Execution time is: "+((double)(end-start)/1000) + " seconds.");
-        display();
+        System.out.println("\nFor support "+minSup+" Execution time is: "+((double)(end-start)/1000) + " seconds.");
+       
     }
+	public static String removeDuplicates(String str) {
+		boolean seen[] = new boolean[256];
+		StringBuilder sb = new StringBuilder(seen.length);
 
+		for (int i = 0; i < str.length(); i++) {
+		    char ch = str.charAt(i);
+		    if (!seen[ch]) {
+		        seen[ch] = true;
+		        sb.append(ch);
+		    }
+		}
+
+		return sb.toString();
+	}
 	private void generateCandidates(int n)
     {
         Vector<String> tempCandidates = new Vector<String>(); //temporary candidate string vector
@@ -204,7 +225,7 @@ public class AprioriAlgo
                     }
 
                 }
-
+                
                 numTransactions=dset.length;
                 for(int i=0; i<candidates.size(); i++)
                 {
@@ -224,35 +245,64 @@ public class AprioriAlgo
      }
     private void display(){
     int i=0, j=0;
+     for(i=0;i<27;i++){
+		arr[j] = 0;
+        }
+
         for (i=0;i<37;i++){
         	for(j=0;j<27;j++){
         		if(dset[i][j] == 1){
         			arr[j]= arr[j]+1;
-        			///System.out.println(dset[i][j]);
-
+        			///System.out.println(dset[i][j]); 
+        			
         		}
         		//System.out.print(dset[i][j]+"\t");
               	}
               		//System.out.print("\n");
         }
-
-        for(i=0;i<27;i++){
-
-        	System.out.print(arr[i]+"\t");
-        }
-
-
+        
+     	System.out.println("");
+    
     }
 	public static void main(String[] args) throws IOException
     {
         //Input file which needs to be parsed
         String fileToParse;//="aprtest";//"datasetbin";
-        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br=new BufferedReader(new InputStreamReader(System.in));            
         System.out.print("\nEnter Transaction Database File Name (Data in Binary form) : ");
-        fileToParse="dataset.csv";
+        fileToParse="dataset1.0.csv";
         AprioriAlgo ap=new AprioriAlgo();
-        ap.minSup=0.4;
-        ap.AprioriAlgoProcess(fileToParse);
+        double i;
+        String a;
+        int j=0;
+        String temp;
+        for ( i=0.9; i>0.3; i = i-0.1){
+	        ap.minSup=(float)i;
+	        ap.AprioriAlgoProcess(fileToParse);
+       }
 
-     }
+        for (int k=0; k<ap.candidatesCopy.size(); k= k+1){
+    		System.out.println( k +"===>" + ap.candidatesCopy.get(k));
+        	if(ap.candidatesCopy.get(k).indexOf("C20") == -1){
+        		System.out.println("\nRemoving " + ap.candidatesCopy.get(k));
+        		ap.candidatesCopy.remove(k);
+        		k--;
+        	}
+     	}
+     	for (int z = 0; z< ap.candidatesCopy.size(); z++){
+     		for(int q =1; q<ap.candidatesCopy.size(); q++){
+     			if(ap.candidatesCopy.get(z).length() > ap.candidatesCopy.get(q).length()){
+     				      Collections.swap(ap.candidatesCopy, z, q);
+     			}
+     		}
+     	}
+			ap. display();
+			System.out.println("\n This is optimal class atrribute \n") ;    	
+     		System.out.print("\n"+ap.candidatesCopy.get(0)+"\n");
+			for(int x=0;x<27;x++){
+	        	System.out.print(ap.arr[x]+"\t");
+        	}
+	        	System.out.print("\n");
+     }	
 }
+ 
