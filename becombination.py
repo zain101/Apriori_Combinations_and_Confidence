@@ -192,7 +192,7 @@ def plot_confidence():
 	x_ax= tuple(ranks[0:n])#py.linspace(0,2,9,0.3)
 	#x_ax= tuple(ranks[0:9])
 	ind= np.arange(n)
-	width= 0.80
+	width= 0.70
 	x= range(0, len(ranks)+1)
 	y= range(0, len(ranks)+1)
 	for i in range(0, len(ranks)+1):
@@ -201,7 +201,7 @@ def plot_confidence():
 	#py.subplot(x,y,'r')
 	fig, ax= plt.subplots()
 	ax.plot(x,y,color= 'lightcoral', linewidth=2)
-	rect1= ax.bar(ind, x_ax,width, color='#8B1C62')
+	rect1= ax.bar(ind, x_ax, width, color='#8B1C62')
 	#ax.legend(rect1[0],('men'))
 	ax.set_title(' Apririo confidence graph for various combinations', fontsize=17)
 	ax.set_ylabel('(Confidence in % ) * 100', fontsize=15)
@@ -210,12 +210,15 @@ def plot_confidence():
 	for i in combi:
 		tmp+= i[0:2]
 	print tuple(tmp)
-	ax.set_xticklabels(tuple(combi), fontsize=7)
+	ax.set_xticklabels(tuple(combi), fontsize=8, rotation= 110)
+	plt.margins(0.09)
+	# Tweak spacing to prevent clipping of tick-labels
+	plt.subplots_adjust(bottom=0.20)
 	def autolabel(rects):
 		# attach some text labels
 		for rect in rects:
 			height = rect.get_height()
-			ax.text(float(rect.get_x())+float(rect.get_width()/2.), 1.05*height,'%f'%float(height),ha='center', va='bottom')
+			ax.text(float(rect.get_x())+float(rect.get_width()/2.), 1.05*height,'%f'%float(height),ha='center', va='bottom',fontsize = 8, rotation= 70 )
    	autolabel(rect1)
 	mng = plt.get_current_fig_manager()
 	mng.full_screen_toggle()
@@ -261,10 +264,10 @@ def moreThan90():
 
 
 if __name__ == "__main__":
-	#os.system("javac AprioriAlgo.java")
-	#os.system("java AprioriAlgo > out.txt")
+	os.system("javac AprioriAlgo.java")
+	os.system("java AprioriAlgo > out.txt")
 	os.system("clear")
-	#os.system("cat out.txt | tail -2 > b.txt")
+	os.system("cat out.txt | tail -2 > b.txt")
 	init()
 	map= genVal(l)
 	#print map
