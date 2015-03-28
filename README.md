@@ -8,8 +8,9 @@ Apriori{combinations_and_confidence}
 
 #####Authors
 Implemntation of Apriori and NavBais:
-	[Iram]()
+	[Iram](https://github.com/irambhakt/)
 	[Yasra]()
+	[Rehaal]()
 Combination and Confidence:
 	[Zain101](https://www.github.com/zain101)
 

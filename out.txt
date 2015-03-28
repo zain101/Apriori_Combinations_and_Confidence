@@ -1,18 +1,18 @@
 
 Enter Transaction Database File Name (Data in Binary form) : 
-For support 0.9 Execution time is: 0.083 seconds.
+For support 0.9 Execution time is: 0.09 seconds.
 
-For support 0.8 Execution time is: 0.091 seconds.
+For support 0.8 Execution time is: 0.092 seconds.
 
-For support 0.7 Execution time is: 0.165 seconds.
+For support 0.7 Execution time is: 0.161 seconds.
 
-For support 0.6 Execution time is: 0.15 seconds.
+For support 0.6 Execution time is: 0.151 seconds.
 
-For support 0.5 Execution time is: 0.561 seconds.
+For support 0.5 Execution time is: 0.554 seconds.
 
-For support 0.4 Execution time is: 4.419 seconds.
+For support 0.4 Execution time is: 4.097 seconds.
 
-For support 0.3 Execution time is: 33.681 seconds.
+For support 0.3 Execution time is: 33.202 seconds.
 0===>[C9 C10 C9 C11 C9 C19 C11 C19]
 
 Removing [C9 C10 C9 C11 C9 C19 C11 C19]
@@ -30,7 +30,7 @@ Removing [C2 C3 C7 C9 C10 C11 C17 C19 C27 C2 C4 C7 C9 C10 C11 C17 C19 C27]
 Removing [C2 C3 C4 C7 C9 C10 C11 C17 C19 C27 C2 C3 C7 C9 C10 C11 C17 C19 C26 C27 C2 C4 C7 C9 C10 C11 C17 C19 C26 C27 C2 C7 C9 C10 C11 C17 C18 C19 C26 C27]
 
 
- This is optimal 
+ This is optimal class atrribute 
 
 
 [C3 C7 C9 C10 C11 C19 C3 C9 C10 C11 C19 C20 C7 C9 C10 C11 C19 C20]

@@ -1,6 +1,6 @@
 #!/bin/python
 import copy
-from pycsv import *
+import pycsv as pc
 import os
 import itertools
 import numpy as np
@@ -39,6 +39,7 @@ def init():
 			l[j] = i.strip(',')
 		j = j + 1
 	l = list(set(l))
+
 	print "Frame-set ==>", l
 	print "Summation of columns ==>", y
 	print "\n\nFinish reading and formatting the data............"
@@ -141,21 +142,27 @@ def calRank():
 def stripping():
 	global combi
 	ii, jj, kk = 0, 0, 0
-	for i in combi:
+	tmp = copy.copy(combi)
+	for i in tmp:
 	    jj=0
 	    for j in i:
 	        kk=0
 	        for k in j:
-	            combi[ii][jj][kk] = giveNum(combi[ii][jj][kk])-1
+	            combi[ii][jj][kk] = giveNum(combi[ii][jj][kk]) -1
 	            kk = kk+1
 	        jj = jj+1
 	    ii=ii+1
 
 def calGlobalUnion():
 	global combi, globalRank
-	print combi[0][0]+combi[0][1]
-	globalRank = workForUnion(combi[0][0]+combi[0][1])
-	print  workForUnion(combi[0][0]+combi[0][1])
+	tmp = copy.copy(combi)
+	#print combi[0][0]+combi[0][1]
+	print "+++++++++++++++++++++++++++++++++++++++"
+	globalRank = pc.workForUnion(tmp[0][0]+tmp[0][1])
+	print globalRank
+	print pc.workForUnion(tmp[0][0]+tmp[0][1])
+	print pc.workForUnion(tmp[0][0]+tmp[0][1])
+	print pc.workForUnion(tmp[0][0]+tmp[0][1])
 	return globalRank
 
 def calRank():
@@ -163,25 +170,15 @@ def calRank():
 	xx= raw_input()
 	j=0
 	global ranks, combi, globalRank
-	for a in combi:
-		tmp= copy.copy(a)
-		if(len(tmp) > 2):
-			for i in range(0,len(a)):
-				if (i == 0):
-					tmp[i]= mapping(tmp[i])[0]
-				else:
-					tmp[i]= giveNum(tmp[i])
+	tmp = copy.copy(combi)
+	for a in tmp:
+		zzz =  pc.workForUnion(copy.copy(a[0]))
+		print a[0] ,type(a[0]) , zzz
+		if(zzz == 0):
+			ranks[j] =0.0
 		else:
-			for i in range(0, len(a)):
-				tmp[i] = mapping(tmp[i])[0]
-			#print tmp, len(tmp)
-		if(len(tmp) > 2):
-				ranks[j]= float(workForUnion(tmp[1:]))/float(tmp[0])
-				j= j+1
-		else:
-			if((sum(tmp[1:])/tmp[0]) > -1):
-				ranks[j]= float(sum(tmp[1:]))/float(tmp[0])
-				j= j+1
+			ranks[j] = 	21.0/zzz
+		j = j+1
 
 def display():
 	for i in range(0, len(combi)):
@@ -196,8 +193,11 @@ def plot_confidence():
 	#x_ax= tuple(ranks[0:9])
 	ind= np.arange(n)
 	width= 0.80
-	x= range(0,11)
-	y= [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9] # these x, y are for the straight line.
+	x= range(0, len(ranks)+1)
+	y= range(0, len(ranks)+1)
+	for i in range(0, len(ranks)+1):
+		x[i] = i
+		y[i] = 0.9
 	#py.subplot(x,y,'r')
 	fig, ax= plt.subplots()
 	ax.plot(x,y,color= 'lightcoral', linewidth=2)
@@ -261,22 +261,22 @@ def moreThan90():
 
 
 if __name__ == "__main__":
-	os.system("javac AprioriAlgo.java")
-	os.system("java AprioriAlgo > out.txt")
+	#os.system("javac AprioriAlgo.java")
+	#os.system("java AprioriAlgo > out.txt")
 	os.system("clear")
-	os.system("cat out.txt | tail -2 > b.txt")
+	#os.system("cat out.txt | tail -2 > b.txt")
 	init()
 	map= genVal(l)
 	#print map
 	genrateCombinations()
 	stripping()
 	print len(combi)
-	for i in combi:
+	'''for i in combi:
 		print i
-	print globalRank
+	xx = raw_input()'''
+	pc.readCSV()
 	xx = raw_input()
-	readCSV()
-	print calGlobalUnion()
+	calGlobalUnion()
 	calRank()
 	#print len(l_csv)
 	display()
