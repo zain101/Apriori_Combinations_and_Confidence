@@ -4,6 +4,7 @@ import pycsv as pc
 import os
 import itertools
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
@@ -189,9 +190,9 @@ def plot_confidence():
 	global combi
 	n = len(ranks)
 	tmp= []
-	x_ax= tuple(ranks[0:n])#py.linspace(0,2,9,0.3)
+	x_ax= ranks[0:n]#py.linspace(0,2,9,0.3)
 	#x_ax= tuple(ranks[0:9])
-	ind= np.arange(n)
+	ind= range(0, n)
 	width= 0.70
 	x= range(0, len(ranks)+1)
 	y= range(0, len(ranks)+1)
@@ -199,27 +200,39 @@ def plot_confidence():
 		x[i] = i
 		y[i] = 0.9
 	#py.subplot(x,y,'r')
-	fig, ax= plt.subplots()
-	ax.plot(x,y,color= 'lightcoral', linewidth=2)
-	rect1= ax.bar(ind, x_ax, width, color='#8B1C62')
-	#ax.legend(rect1[0],('men'))
+	#fig, ax= plt.subplots()
+	x_ax=tuple(x_ax)
+	fig = plt.figure()
+	ax = fig.add_subplot(111, projection='3d')
+	print ind
+	for i in range(0, n):
+		ind[i] = ind[i]+2
+		rect1 = ax.bar([ind[i]], [x_ax[i]], zs=i, zdir='y', width=0.70, color='#8B1C62', alpha=0.6)
+	#ax.plot(x,y, zs=0, zdir='y', color= 'lightcoral', linewidth=2)
+
+
 	ax.set_title(' Apririo confidence graph for various combinations', fontsize=17)
-	ax.set_ylabel('(Confidence in % ) * 100', fontsize=15)
-	ax.set_xlabel('Factors affecting failure', fontsize=15)
-	ax.set_xticks(ind+width-0.40)
+	ax.set_zlabel('(Confidence in % ) * 100', fontsize=15)
+	ax.set_ylabel('<===Factors affecting failure{on X-axis}',  labelpad=100 ,fontsize=15)
+	ax.set_xticks(ind+[width])
 	for i in combi:
 		tmp+= i[0:2]
 	print tuple(tmp)
-	ax.set_xticklabels(tuple(combi), fontsize=8, rotation= 110)
-	plt.margins(0.09)
+	ax.set_xticklabels(tuple(combi), fontsize=10, rotation= 90 )
+
+	plt.margins(0.02)
 	# Tweak spacing to prevent clipping of tick-labels
-	plt.subplots_adjust(bottom=0.20)
-	def autolabel(rects):
+	plt.subplots_adjust(bottom=0.08)
+
+	def autolabel():
 		# attach some text labels
-		for rect in rects:
-			height = rect.get_height()
-			ax.text(float(rect.get_x())+float(rect.get_width()/2.), 1.05*height,'%f'%float(height),ha='center', va='bottom',fontsize = 8, rotation= 70 )
-   	autolabel(rect1)
+		for i in range(0, n):
+			ax.text(int(ind[i])+1, i-2, x_ax[i], str(x_ax[i])[0:4], color='#660066', backgroundcolor= '#c187e1', family= 'fantasy',weight= 'bold', rotation='vertical', fontsize=12)   	#autolabel(rect1)
+	print "++++++++++++++", rect1
+	for  i in rect1:
+		print i
+	print "+++++++++++++++++"
+	autolabel()
 	mng = plt.get_current_fig_manager()
 	mng.full_screen_toggle()
 	plt.show()
@@ -245,6 +258,7 @@ def pieChart():
 	#cs=cm.Set1(np.arange(9)/9.)
 	fracs= ranks[0:len(combi)]
 	py.pie(fracs, labels=labels, colors= colors, explode= explode, autopct='%1.1f%%', shadow=True, startangle=90)
+	py.title('Influence of each factor...', bbox={'facecolor':'#CCFF99', 'pad':20})
 	mng = plt.get_current_fig_manager()
 	mng.full_screen_toggle()
 	py.show('equal')
@@ -264,8 +278,8 @@ def moreThan90():
 
 
 if __name__ == "__main__":
-	os.system("javac AprioriAlgo.java")
-	os.system("java AprioriAlgo > out.txt")
+	#os.system("javac AprioriAlgo.java")
+	#os.system("java AprioriAlgo > out.txt")
 	os.system("clear")
 	os.system("cat out.txt | tail -2 > b.txt")
 	init()

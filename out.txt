@@ -1,18 +1,18 @@
 
 Enter Transaction Database File Name (Data in Binary form) : 
-For support 0.9 Execution time is: 0.106 seconds.
+For support 0.9 Execution time is: 0.087 seconds.
 
-For support 0.8 Execution time is: 0.105 seconds.
+For support 0.8 Execution time is: 0.081 seconds.
 
-For support 0.7 Execution time is: 0.147 seconds.
+For support 0.7 Execution time is: 0.145 seconds.
 
-For support 0.6 Execution time is: 0.153 seconds.
+For support 0.6 Execution time is: 0.131 seconds.
 
-For support 0.5 Execution time is: 0.494 seconds.
+For support 0.5 Execution time is: 0.538 seconds.
 
-For support 0.4 Execution time is: 4.477 seconds.
+For support 0.4 Execution time is: 4.066 seconds.
 
-For support 0.3 Execution time is: 33.059 seconds.
+For support 0.3 Execution time is: 29.968 seconds.
 0===>[C9 C10 C9 C11 C9 C19 C11 C19]
 
 Removing [C9 C10 C9 C11 C9 C19 C11 C19]
