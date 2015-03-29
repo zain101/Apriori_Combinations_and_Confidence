@@ -1,9 +1,0 @@
-class test{
-	public static void main(String args[]){
-		Float j= 0.0f;
-		Float a= 100.0f;
-		for(j= (float)0.9; j>0.1; j= (float)(j- 0.1)){
-		System.out.println((float)j);
-		}
-	}
-}
