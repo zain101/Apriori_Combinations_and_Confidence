@@ -174,7 +174,7 @@ def calRank():
 	tmp = copy.copy(combi)
 	for a in tmp:
 		zzz =  pc.workForUnion(copy.copy(a[0]))
-		print a[0] ,type(a[0]) , zzz
+		# print a[0] ,type(a[0]) , zzz
 		if(zzz == 0):
 			ranks[j] =0.0
 		else:
@@ -204,7 +204,6 @@ def plot_confidence():
 	x_ax=tuple(x_ax)
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
-	print ind
 	for i in range(0, n):
 		ind[i] = ind[i]+2
 		rect1 = ax.bar([ind[i]], [x_ax[i]], zs=i, zdir='y', width=0.70, color='#8B1C62', alpha=0.6)
@@ -217,7 +216,7 @@ def plot_confidence():
 	ax.set_xticks(ind+[width])
 	for i in combi:
 		tmp+= i[0:2]
-	print tuple(tmp)
+	# print tuple(tmp)
 	ax.set_xticklabels(tuple(combi), fontsize=10, rotation= 90 )
 
 	plt.margins(0.02)
@@ -228,10 +227,6 @@ def plot_confidence():
 		# attach some text labels
 		for i in range(0, n):
 			ax.text(int(ind[i])+1, i-2, x_ax[i], str(x_ax[i])[0:4], color='#660066', backgroundcolor= '#c187e1', family= 'fantasy',weight= 'bold', rotation='vertical', fontsize=12)   	#autolabel(rect1)
-	print "++++++++++++++", rect1
-	for  i in rect1:
-		print i
-	print "+++++++++++++++++"
 	autolabel()
 	mng = plt.get_current_fig_manager()
 	mng.full_screen_toggle()
@@ -242,7 +237,6 @@ def pieChart():
 	tmp= []
 	for i in combi:
 		tmp+= i[0:2]
-	print tuple(tmp)
 	labels= tuple(pieCombi)#'a', 'b', '2', '3', '4','5', '6', '7','5'
 	colors_list = ['#8B8B00', '#FFD343', '#8B475D', 'lightcoral', '#FF9900', '#8B668B', '#8B7765','#61B2A7', '#2869AF']
 	j = 0
@@ -283,23 +277,19 @@ if __name__ == "__main__":
 	os.system("clear")
 	os.system("cat out.txt | tail -2 > b.txt")
 	init()
-	map= genVal(l)
+	#map= genVal(l)
 	#print map
 	genrateCombinations()
 	stripping()
 	print len(combi)
-	'''for i in combi:
+	for i in combi:
 		print i
-	xx = raw_input()'''
+	xx = raw_input()
 	pc.readCSV()
 	xx = raw_input()
 	calGlobalUnion()
 	calRank()
-	#print len(l_csv)
 	display()
-	#dispCSV()
-	#print ranks
-	#display()
 	moreThan90()
 	plot_confidence()
 	pieChart()
