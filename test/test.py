@@ -1,13 +1,13 @@
-from  app import pycsv
+from  app import *
 import copy
 
 def single():
-    print pycsv.workForUnion([19,18])
-    print pycsv.workForUnion([19])
-    print pycsv.workForUnion([19])
+    print workForUnion([19,18])
+    print workForUnion([19])
+    print workForUnion([19])
     z = [[[19],[5]], [[19],[5]]]
-    print z[0][0], pycsv.workForUnion(z[0][0])
-    print z[1][0], pycsv.workForUnion(z[1][0])
+    print z[0][0], workForUnion(z[0][0])
+    print z[1][0], workForUnion(z[1][0])
 
 
 
@@ -17,14 +17,14 @@ def listTest(xxx):
     for i in range(0, len(xxx)):
         z = copy.copy(xxx)
         zzz = z[i][0]
-        print  zzz, pycsv.workForUnion(copy.copy(zzz))
+        print  zzz, workForUnion(copy.copy(zzz))
 
 
 
 
 
 if __name__ == '__main__':
-        pycsv.readCSV()
+        readCSV()
         print "performin for single element ................"
         single()
         print "performin for single element ends ................"

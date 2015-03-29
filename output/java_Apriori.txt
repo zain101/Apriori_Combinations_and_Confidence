@@ -1,0 +1,37 @@
+
+Enter Transaction Database File Name (Data in Binary form) : 
+For support 0.9 Execution time is: 0.083 seconds.
+
+For support 0.8 Execution time is: 0.097 seconds.
+
+For support 0.7 Execution time is: 0.171 seconds.
+
+For support 0.6 Execution time is: 0.164 seconds.
+
+For support 0.5 Execution time is: 0.651 seconds.
+
+For support 0.4 Execution time is: 4.228 seconds.
+
+For support 0.3 Execution time is: 31.935 seconds.
+0===>[C9 C10 C9 C11 C9 C19 C11 C19]
+
+Removing [C9 C10 C9 C11 C9 C19 C11 C19]
+0===>[C3 C9 C11 C19 C9 C10 C11 C19]
+
+Removing [C3 C9 C11 C19 C9 C10 C11 C19]
+0===>[C3 C7 C9 C10 C19 C3 C7 C10 C11 C19 C3 C9 C10 C11 C19 C3 C9 C11 C19 C20 C7 C9 C10 C11 C19 C9 C10 C11 C19 C20]
+1===>[C3 C7 C9 C10 C11 C19 C3 C9 C10 C11 C19 C20 C7 C9 C10 C11 C19 C20]
+2===>[C2 C3 C7 C9 C10 C11 C19 C3 C7 C9 C10 C11 C17 C19 C3 C7 C9 C10 C11 C19 C20]
+3===>[C2 C3 C7 C9 C10 C11 C17 C19 C27 C2 C4 C7 C9 C10 C11 C17 C19 C27]
+
+Removing [C2 C3 C7 C9 C10 C11 C17 C19 C27 C2 C4 C7 C9 C10 C11 C17 C19 C27]
+3===>[C2 C3 C4 C7 C9 C10 C11 C17 C19 C27 C2 C3 C7 C9 C10 C11 C17 C19 C26 C27 C2 C4 C7 C9 C10 C11 C17 C19 C26 C27 C2 C7 C9 C10 C11 C17 C18 C19 C26 C27]
+
+Removing [C2 C3 C4 C7 C9 C10 C11 C17 C19 C27 C2 C3 C7 C9 C10 C11 C17 C19 C26 C27 C2 C4 C7 C9 C10 C11 C17 C19 C26 C27 C2 C7 C9 C10 C11 C17 C18 C19 C26 C27]
+
+
+ This is optimal class atrribute 
+
+
+[C3 C7 C9 C10 C11 C19 C3 C9 C10 C11 C19 C20 C7 C9 C10 C11 C19 C20]
+27	31	34	28	19	22	30	18	36	35	35	19	1	10	23	9	27	24	35	31	10	5	22	15	4	25	24	
