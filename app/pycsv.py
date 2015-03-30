@@ -5,7 +5,7 @@ c_csv=[]
 def readCSV():
 	print "\nReading the csv file ................................................................................[start]"
 	global l_csv
-	with open('/home/zainul/Desktop/Apriori_Combinations_and_Confidence/assets/dataset1.0.csv', 'rb') as  csvfile:
+	with open('../assets/dataset1.0.csv', 'rb') as  csvfile:
 			spamreader= csv.reader(csvfile, delimiter= ' ', quotechar= '|')
 			for row in spamreader:
 				#c+= copy.copy([row])

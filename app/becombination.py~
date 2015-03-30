@@ -1,9 +1,10 @@
 #!/bin/python
 import copy
-from pycsv import *
+import pycsv as pc
 import os
 import itertools
 import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 from matplotlib import cm
 
@@ -22,9 +23,9 @@ for i in range(0, 500):
 def init():
 	global l
 	global y
-	print "#######Reading from file output of Apriori................. {press enter to start}"
+	print "#######Reading from file output of Apriori................. {press enter to start}.....................[start]"
 	xx= raw_input()
-	f= open('b.txt', 'r')
+	f= open('../output/frameset_Sum.txt', 'r')
 	content= f.readline()
 	l= content.strip('[]\n')
 	con = f.readline()
@@ -39,6 +40,7 @@ def init():
 			l[j] = i.strip(',')
 		j = j + 1
 	l = list(set(l))
+
 	print "Frame-set ==>", l
 	print "Summation of columns ==>", y
 	print "\n\nFinish reading and formatting the data............"
@@ -141,47 +143,37 @@ def calRank():
 def stripping():
 	global combi
 	ii, jj, kk = 0, 0, 0
-	for i in combi:
+	tmp = copy.copy(combi)
+	for i in tmp:
 	    jj=0
 	    for j in i:
 	        kk=0
 	        for k in j:
-	            combi[ii][jj][kk] = giveNum(combi[ii][jj][kk])-1
+	            combi[ii][jj][kk] = giveNum(combi[ii][jj][kk]) -1
 	            kk = kk+1
 	        jj = jj+1
 	    ii=ii+1
 
 def calGlobalUnion():
 	global combi, globalRank
-	print combi[0][0]+combi[0][1]
-	globalRank = workForUnion(combi[0][0]+combi[0][1])
-	print  workForUnion(combi[0][0]+combi[0][1])
+	tmp = copy.copy(combi)
+	globalRank = pc.workForUnion(tmp[0][0]+tmp[0][1])
 	return globalRank
 
 def calRank():
-	print "\nPress enter to start calculating the Confidence..............."
+	print "\nPress enter to start calculating the Confidence......................................................[start]"
 	xx= raw_input()
 	j=0
 	global ranks, combi, globalRank
-	for a in combi:
-		tmp= copy.copy(a)
-		if(len(tmp) > 2):
-			for i in range(0,len(a)):
-				if (i == 0):
-					tmp[i]= mapping(tmp[i])[0]
-				else:
-					tmp[i]= giveNum(tmp[i])
+	tmp = copy.copy(combi)
+	for a in tmp:
+		zzz =  pc.workForUnion(copy.copy(a[0]))
+		# print a[0] ,type(a[0]) , zzz
+		if(zzz == 0):
+			ranks[j] =0.0
 		else:
-			for i in range(0, len(a)):
-				tmp[i] = mapping(tmp[i])[0]
-			#print tmp, len(tmp)
-		if(len(tmp) > 2):
-				ranks[j]= float(workForUnion(tmp[1:]))/float(tmp[0])
-				j= j+1
-		else:
-			if((sum(tmp[1:])/tmp[0]) > -1):
-				ranks[j]= float(sum(tmp[1:]))/float(tmp[0])
-				j= j+1
+			ranks[j] = 	21.0/zzz
+		j = j+1
 
 def display():
 	for i in range(0, len(combi)):
@@ -192,33 +184,54 @@ def plot_confidence():
 	global combi
 	n = len(ranks)
 	tmp= []
-	x_ax= tuple(ranks[0:n])#py.linspace(0,2,9,0.3)
+	x_ax= ranks[0:n]#py.linspace(0,2,9,0.3)
 	#x_ax= tuple(ranks[0:9])
-	ind= np.arange(n)
-	width= 0.80
-	x= range(0,11)
-	y= [0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9] # these x, y are for the straight line.
+	ind= range(0, n)
+	width= 0.70
+	x= range(0, len(ranks)+1)
+	y= range(0, len(ranks)+1)
+	for i in range(0, len(ranks)+1):
+		x[i] = i
+		y[i] = 0.9
 	#py.subplot(x,y,'r')
-	fig, ax= plt.subplots()
-	ax.plot(x,y,color= 'lightcoral', linewidth=2)
-	rect1= ax.bar(ind, x_ax,width, color='#8B1C62')
-	#ax.legend(rect1[0],('men'))
-	ax.set_title(' Apririo confidence graph for various combinations', fontsize=17)
-	ax.set_ylabel('(Confidence in % ) * 100', fontsize=15)
-	ax.set_xlabel('Factors affecting failure', fontsize=15)
-	ax.set_xticks(ind+width-0.40)
+	#fig, ax= plt.subplots()
+	x_ax=tuple(x_ax)
+	fig = plt.figure()
+	ax = fig.add_subplot(111, projection='3d')
+	dx=np.ones(n)
+	dy=np.ones(n)
+	dz=range(0,n)
+	for i in range(0, n):
+		ind[i] = ind[i]+2
+		#rect1 = ax.bar3d([ind[i]], [x_ax[i]], zs=i, zdir='y', dx=1, dy=1,dz=1, width=0.70, color='#8B1C62', alpha=0.6)
+		rect1 = ax.bar3d([ind[i]], i ,0, 0.5, 0.5, [x_ax[i]], color='#8B1C62')
+	#ax.plot(x,y, zs=0, zdir='y', color= 'lightcoral', linewidth=2)
+
+
+	#ax.set_title(' Apririo confidence graph for various combinations', fontsize=17)
+	#ax.set_zlabel('(Confidence in % ) * 100', fontsize=15)
+	#ax.set_ylabel('<===Factors affecting failure{on X-axis}',  labelpad=100 ,fontsize=15)
+	ax.set_xticks(ind+[width])
 	for i in combi:
 		tmp+= i[0:2]
-	print tuple(tmp)
-	ax.set_xticklabels(tuple(combi), fontsize=7)
-	def autolabel(rects):
+	# print tuple(tmp)
+	ax.set_xticklabels(tuple(combi), fontsize=10, rotation= 90 )
+
+	plt.margins(0.02)
+	# Tweak spacing to prevent clipping of tick-labels
+	plt.subplots_adjust(bottom=0.08)
+
+	def autolabel():
 		# attach some text labels
-		for rect in rects:
-			height = rect.get_height()
-			ax.text(float(rect.get_x())+float(rect.get_width()/2.), 1.05*height,'%f'%float(height),ha='center', va='bottom')
-   	autolabel(rect1)
+		for i in range(0, n):
+			try:
+				ax.text(int(ind[i])+1, i-2, x_ax[i]+0.05, str(x_ax[i])[0:4], color='#660066', backgroundcolor= '#c187e1', weight= 'bold', rotation='vertical', fontsize=10, horizontalalignment='left', verticalalignment='bottom')   	#autolabel(rect1)
+			except:
+				print "Fonts missing ......................................................................................[ERROR]"
+	autolabel()
 	mng = plt.get_current_fig_manager()
 	mng.full_screen_toggle()
+	plt.savefig('../output/bar.png')
 	plt.show()
 
 def pieChart():
@@ -226,7 +239,6 @@ def pieChart():
 	tmp= []
 	for i in combi:
 		tmp+= i[0:2]
-	print tuple(tmp)
 	labels= tuple(pieCombi)#'a', 'b', '2', '3', '4','5', '6', '7','5'
 	colors_list = ['#8B8B00', '#FFD343', '#8B475D', 'lightcoral', '#FF9900', '#8B668B', '#8B7765','#61B2A7', '#2869AF']
 	j = 0
@@ -242,8 +254,10 @@ def pieChart():
 	#cs=cm.Set1(np.arange(9)/9.)
 	fracs= ranks[0:len(combi)]
 	py.pie(fracs, labels=labels, colors= colors, explode= explode, autopct='%1.1f%%', shadow=True, startangle=90)
+	py.title('Influence of each factor...', bbox={'facecolor':'#CCFF99', 'pad':20})
 	mng = plt.get_current_fig_manager()
 	mng.full_screen_toggle()
+	py.savefig('../output/pie.png', bbox_inches='tight')
 	py.show('equal')
 
 
@@ -262,27 +276,30 @@ def moreThan90():
 
 if __name__ == "__main__":
 	os.system("javac AprioriAlgo.java")
-	os.system("java AprioriAlgo > out.txt")
+	os.system("java AprioriAlgo > ../output/java_Apriori.txt")
 	os.system("clear")
-	os.system("cat out.txt | tail -2 > b.txt")
+	os.system("cat ../output/java_Apriori.txt | tail -2 > ../output/frameset_Sum.txt")
 	init()
-	map= genVal(l)
+	#map= genVal(l)
 	#print map
 	genrateCombinations()
+	print "\nGenrating Combinations...........................................................................      [OK]"
 	stripping()
-	'''print len(combi)
+	print "\nStripping Integers...............................................................................      [OK]"
+	print "\nTotal no. of combinations are ==> ", len(combi)
 	for i in combi:
-		print i[0], i[1]'''
-	print globalRank
+		print i
 	xx = raw_input()
-	readCSV()
-	print calGlobalUnion()
+	pc.readCSV()
+	calGlobalUnion()
+	print "\nCalculating Global union..........................................................................   [OK]"
 	calRank()
-	#print len(l_csv)
+	print "\nCalculating Confidence............................................................................      [OK]"
 	display()
-	#dispCSV()
-	#print ranks
-	#display()
 	moreThan90()
+	print "\nFiltering results > 90............................................................................      [OK]"
 	plot_confidence()
+	print  "\nBar Graph plotted and saved .....................................................................      [OK]"
 	pieChart()
+	print  "\nPIE Graph plotted and saved .....................................................................      [OK]"
+	os.system("gedit ../output/java_Apriori.txt")

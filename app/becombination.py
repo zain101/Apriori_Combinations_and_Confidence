@@ -25,7 +25,7 @@ def init():
 	global y
 	print "#######Reading from file output of Apriori................. {press enter to start}.....................[start]"
 	xx= raw_input()
-	f= open('/home/zainul/Desktop/Apriori_Combinations_and_Confidence/output/frameset_Sum.txt', 'r')
+	f= open('../output/frameset_Sum.txt', 'r')
 	content= f.readline()
 	l= content.strip('[]\n')
 	con = f.readline()
@@ -198,15 +198,19 @@ def plot_confidence():
 	x_ax=tuple(x_ax)
 	fig = plt.figure()
 	ax = fig.add_subplot(111, projection='3d')
+	dx=np.ones(n)
+	dy=np.ones(n)
+	dz=range(0,n)
 	for i in range(0, n):
 		ind[i] = ind[i]+2
-		rect1 = ax.bar([ind[i]], [x_ax[i]], zs=i, zdir='y', width=0.70, color='#8B1C62', alpha=0.6)
+		#rect1 = ax.bar3d([ind[i]], [x_ax[i]], zs=i, zdir='y', dx=1, dy=1,dz=1, width=0.70, color='#8B1C62', alpha=0.6)
+		rect1 = ax.bar3d([ind[i]], i ,0, 0.5, 0.5, [x_ax[i]], color='#8B1C62')
 	#ax.plot(x,y, zs=0, zdir='y', color= 'lightcoral', linewidth=2)
 
 
-	ax.set_title(' Apririo confidence graph for various combinations', fontsize=17)
-	ax.set_zlabel('(Confidence in % ) * 100', fontsize=15)
-	ax.set_ylabel('<===Factors affecting failure{on X-axis}',  labelpad=100 ,fontsize=15)
+	#ax.set_title(' Apririo confidence graph for various combinations', fontsize=17)
+	#ax.set_zlabel('(Confidence in % ) * 100', fontsize=15)
+	#ax.set_ylabel('<===Factors affecting failure{on X-axis}',  labelpad=100 ,fontsize=15)
 	ax.set_xticks(ind+[width])
 	for i in combi:
 		tmp+= i[0:2]
@@ -221,7 +225,7 @@ def plot_confidence():
 		# attach some text labels
 		for i in range(0, n):
 			try:
-				ax.text(int(ind[i])+1, i-2, x_ax[i], str(x_ax[i])[0:4], color='#660066', backgroundcolor= '#c187e1', weight= 'bold', rotation='vertical', fontsize=12)   	#autolabel(rect1)
+				ax.text(int(ind[i])+1, i-2, x_ax[i]+0.05, str(x_ax[i])[0:4], color='#660066', backgroundcolor= '#c187e1', weight= 'bold', rotation='vertical', fontsize=10, horizontalalignment='left', verticalalignment='bottom')   	#autolabel(rect1)
 			except:
 				print "Fonts missing ......................................................................................[ERROR]"
 	autolabel()
@@ -272,9 +276,9 @@ def moreThan90():
 
 if __name__ == "__main__":
 	os.system("javac AprioriAlgo.java")
-	os.system("java AprioriAlgo > /home/zainul/Desktop/Apriori_Combinations_and_Confidence/output/java_Apriori.txt")
+	os.system("java AprioriAlgo > ../output/java_Apriori.txt")
 	os.system("clear")
-	os.system("cat /home/zainul/Desktop/Apriori_Combinations_and_Confidence/output/java_Apriori.txt | tail -2 > /home/zainul/Desktop/Apriori_Combinations_and_Confidence/output/frameset_Sum.txt")
+	os.system("cat ../output/java_Apriori.txt | tail -2 > ../output/frameset_Sum.txt")
 	init()
 	#map= genVal(l)
 	#print map
@@ -298,4 +302,4 @@ if __name__ == "__main__":
 	print  "\nBar Graph plotted and saved .....................................................................      [OK]"
 	pieChart()
 	print  "\nPIE Graph plotted and saved .....................................................................      [OK]"
-	os.system("gedit /home/zainul/Desktop/Apriori_Combinations_and_Confidence/output/java_Apriori.txt")
+	os.system("gedit ../output/java_Apriori.txt")

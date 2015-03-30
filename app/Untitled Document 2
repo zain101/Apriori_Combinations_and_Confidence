@@ -1,0 +1,58 @@
+Hi,
+
+I need to plot a 3D bar graph for my college project ,the bar garph is getting plotted but I want text to be displayed on each bar graph showing the values of its z-axis.
+
+This is code snippet that shows for 2D graph:
+[source code link][1]
+
+
+	#!/usr/bin/env python
+	# a bar plot with errorbars
+	import numpy as np
+	import matplotlib.pyplot as plt
+
+	N = 5
+	menMeans = (20, 35, 30, 35, 27)
+	menStd =   (2, 3, 4, 1, 2)
+
+	ind = np.arange(N)  # the x locations for the groups
+	width = 0.35       # the width of the bars
+
+	fig, ax = plt.subplots()
+	rects1 = ax.bar(ind, menMeans, width, color='r', yerr=menStd)
+
+	womenMeans = (25, 32, 34, 20, 25)
+	womenStd =   (3, 5, 2, 3, 3)
+	rects2 = ax.bar(ind+width, womenMeans, width, color='y', yerr=womenStd)
+
+	# add some text for labels, title and axes ticks
+	ax.set_ylabel('Scores')
+	ax.set_title('Scores by group and gender')
+	ax.set_xticks(ind+width)
+	ax.set_xticklabels( ('G1', 'G2', 'G3', 'G4', 'G5') )
+
+	ax.legend( (rects1[0], rects2[0]), ('Men', 'Women') )
+
+	def autolabel(rects):
+		# attach some text labels
+		for rect in rects:
+		    height = rect.get_height()
+		    ax.text(rect.get_x()+rect.get_width()/2., 1.05*height, '%d'%int(height),
+		            ha='center', va='bottom')
+
+	autolabel(rects1)
+	autolabel(rects2)
+
+	plt.show()
+
+
+code for 3D bar graph is [source code for 3d bar-graph][2]
+
+
+In the 2D version the autolabel function use get_height(), get_x() and get_width() to calculate the height dynamically which in not supported in 3D version it gives:
+
+*    patch3d error for function not found 
+
+Is there any workaround to display text as in 2D graph.
+  [1]: http://matplotlib.org/examples/api/barchart_demo.html
+  [2]: http://matplotlib.org/examples/mplot3d/bars3d_demo.html
