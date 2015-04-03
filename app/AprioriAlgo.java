@@ -276,7 +276,7 @@ public class AprioriAlgo
         String a;
         int j=0;
         String temp;
-        for ( i=0.9; i>0.3; i = i-0.1){
+        for ( i=0.9; i>0.4; i = i-0.1){
 	        ap.minSup=(float)i;
 	        ap.AprioriAlgoProcess(fileToParse);
        }

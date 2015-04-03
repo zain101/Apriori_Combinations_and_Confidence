@@ -260,6 +260,13 @@ def pieChart():
 	py.savefig('../output/pie.png', bbox_inches='tight')
 	py.show('equal')
 
+def deco(palis):
+	pal = copy.copy(palis)
+	
+	for i in range(0, len(pal)):
+		for j in range(0, len(pal[i])):
+			pal[i][j] = pal[i][j] + 1
+	print pal
 
 def moreThan90():
 	global ranks, combi, pieCombi
@@ -284,12 +291,15 @@ if __name__ == "__main__":
 	#print map
 	genrateCombinations()
 	print "\nGenrating Combinations...........................................................................      [OK]"
-	stripping()
-	print "\nStripping Integers...............................................................................      [OK]"
 	print "\nTotal no. of combinations are ==> ", len(combi)
-	for i in combi:
+	tmpu = copy.copy(combi)
+	for i in tmpu:
 		print i
 	xx = raw_input()
+
+	stripping()
+	print "\nStripping Integers...............................................................................      [OK]"
+	
 	pc.readCSV()
 	calGlobalUnion()
 	print "\nCalculating Global union..........................................................................   [OK]"

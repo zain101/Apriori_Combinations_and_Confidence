@@ -23,13 +23,16 @@ for i in range(0, 500):
 def init():
 	global l
 	global y
-	print "#######Reading from file output of Apriori................. {press enter to start}.....................[start]"
+	print "Reading from file output of Apriori .............................................{press enter to start}[start]"
 	xx= raw_input()
+	print ".....................................................................................................[started]"
+
 	f= open('../output/frameset_Sum.txt', 'r')
 	content= f.readline()
 	l= content.strip('[]\n')
 	con = f.readline()
 	f.close()
+	print ".....................................................................................................[Finished]"
 	x= l.split(" ")
 	y= con.split("\t")
 	y= y[0:27]
@@ -61,7 +64,7 @@ def genVal(m):
 
 '''
 def genrateCombinations():
-	print "\nGenrating the Combinations......................."
+	print "\nGenrating the Combinations...........................................................................[Started]"
 	global combi, cpy_combi
 	global l
 	for i in range(0,len(l)):
@@ -284,12 +287,15 @@ if __name__ == "__main__":
 	#print map
 	genrateCombinations()
 	print "\nGenrating Combinations...........................................................................      [OK]"
-	stripping()
-	print "\nStripping Integers...............................................................................      [OK]"
 	print "\nTotal no. of combinations are ==> ", len(combi)
-	for i in combi:
+	tmpu = copy.copy(combi)
+	for i in tmpu:
 		print i
 	xx = raw_input()
+
+	stripping()
+	print "\nStripping Integers...............................................................................      [OK]"
+
 	pc.readCSV()
 	calGlobalUnion()
 	print "\nCalculating Global union..........................................................................   [OK]"
@@ -298,6 +304,8 @@ if __name__ == "__main__":
 	display()
 	moreThan90()
 	print "\nFiltering results > 90............................................................................      [OK]"
+	print "\nPress enter to plot Graphs {enter}.........................................................................!"
+	xx=raw_input()
 	plot_confidence()
 	print  "\nBar Graph plotted and saved .....................................................................      [OK]"
 	pieChart()
